@@ -1,3 +1,5 @@
+Open a matlab instance in the background, and send it commands from Neovim.
+
 # Setup
 Install using your favorite package manager.
 
@@ -47,4 +49,12 @@ require("matlab").visual_evaluate()
 -- Close window and end matlab process.
 require("matlab").close()
 ```
+
+# TODO:
+- [x] Block evaluation
+- [ ] Configuration
+    - [ ] matlab window
+    - [ ] matlab command
+    - [ ] matlab flags
+- [ ] Matlab output inserted as comments under command
 
