@@ -57,9 +57,14 @@ M.evaluate = function(input)
     vim.fn.chansend(M.repl_job_id, input .. "\n")
 end
 
-M.evaluate_file = function()
+M.evaluate_current_file = function()
+    local path = vim.fn.expand('%')
+    M.evaluate_file(path)
+end
+
+M.evaluate_file = function(path)
     vim.cmd("w")
-    local command = [[run("]] .. vim.fn.expand('%') .. [[")]]
+    local command = [[run("]] .. path .. [[")]]
     M.evaluate(command)
 end
 
