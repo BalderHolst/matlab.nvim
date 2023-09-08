@@ -54,7 +54,8 @@ require("matlab").close()
 - [x] Block evaluation
 - [ ] Configuration
     - [ ] matlab window
-    - [ ] matlab command
-    - [ ] matlab flags
+    - [x] matlab command
+    - [x] matlab flags
 - [ ] Matlab output inserted as comments under command
+- [ ] Open matlab windows like workspace
 
