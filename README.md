@@ -7,10 +7,33 @@ Install using your favorite package manager.
 ```lua
 use 'BalderHolst/matlab.nvim'
 ```
+Make sure to have Matlab installed.
 
-Make sure to have matlab installed, and available in the PATH.
+## Configuration
+If the `matlab` executable is in your `$PATH`, the plugin should already work, but you can configure the plugin with the `setup` function.
 
-You must be able to run matlab by simply entering `matlab` into a terminal.
+This is the default configuration:
+```lua
+require("matlab").setup({
+
+    -- Path to the matlab executable. If `matlab` is already in your $PATH, just leave this.
+    matlab_path = "matlab",
+
+    -- How to open the matlab window. There are 4 options for now:
+        -- split
+        -- splitdown
+        -- vsplit
+        -- vsplitright
+    open_window = require("matlab.openers").vsplit,
+
+    -- Display the matlab splash screen on startup
+    splash = true,
+
+    -- A list of any other flags you want to add, when launching matlab
+    matlab_flags = {},
+
+})
+```
 
 
 # Functions
