@@ -67,6 +67,9 @@ end
 local function create_out_buffer()
     if M.out_win == nil or M.out_buf == nil then
         M.out_win, M.out_buf = M.config.open_window()
+        if M.out_win == nil or M.out_buf == nil then
+            error("ERROR: the `open_window` function MUST return a tuple of (output_window, output_buffer).")
+        end
     end
 end
 
