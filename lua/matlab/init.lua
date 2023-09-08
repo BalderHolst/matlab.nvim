@@ -179,8 +179,8 @@ M.is_open = function()
     return M.repl_job_id ~= nil
 end
 
-M.open_variable_explorer = function()
-    vim.fn.chansend(M.repl_job_id, "workspace\n")
+M.open_workspace = function()
+    M.evaluate("workspace\n")
 end
 
 return M

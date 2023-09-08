@@ -57,5 +57,4 @@ require("matlab").close()
     - [x] matlab command
     - [x] matlab flags
 - [ ] Matlab output inserted as comments under command
-- [ ] Open matlab windows like workspace
 
