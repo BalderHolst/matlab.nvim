@@ -3,8 +3,9 @@ local M = {}
 -- Default configuration
 M.config = {
     matlab_path = "matlab",
+    open_window = require("matlab.openers").split,
     splash = true,
-    matlab_flags = {}
+    matlab_flags = {},
 }
 
 -- Overrides default configuration
@@ -65,16 +66,7 @@ end
 
 local function create_out_buffer()
     if M.out_win == nil or M.out_buf == nil then
-        local code_win = vim.api.nvim_get_current_win()
-        vim.cmd("vsplit") -- spilt vertically
-        M.out_win = vim.api.nvim_get_current_win()
-        M.out_buf = vim.api.nvim_create_buf(true, true)
-        vim.api.nvim_win_set_buf(M.out_win, M.out_buf) -- sets the content op the split to be the new buffer
-        vim.api.nvim_win_set_width(M.out_win, 70)      -- Sets the width
-        vim.api.nvim_win_set_option(M.out_win, "relativenumber", false)
-        vim.api.nvim_win_set_option(M.out_win, "wrap", false)
-        vim.api.nvim_set_current_win(code_win) -- sætter curseren på coden igen
-        return M.out_win, M.out_buf
+        M.out_win, M.out_buf = M.config.open_window()
     end
 end
 
