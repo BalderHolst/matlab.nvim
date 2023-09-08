@@ -3,7 +3,7 @@ local M = {}
 -- Default configuration
 M.config = {
     matlab_path = "matlab",
-    open_window = require("matlab.openers").split,
+    open_window = require("matlab.openers").vsplit,
     splash = true,
     matlab_flags = {},
 }
