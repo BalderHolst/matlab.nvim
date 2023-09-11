@@ -95,10 +95,5 @@ require("matlab").evaluate_lines(lines)
 ```
 
 # TODO:
-- [x] Block evaluation
-- [ ] Configuration
-    - [ ] matlab window
-    - [x] matlab command
-    - [x] matlab flags
 - [ ] Matlab output inserted as comments under command
 
