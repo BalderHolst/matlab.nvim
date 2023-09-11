@@ -10,7 +10,7 @@ use 'BalderHolst/matlab.nvim'
 Make sure to have Matlab installed.
 
 ## Configuration
-If the `matlab` executable is in your `$PATH`, the plugin should already work, but you can configure the plugin with the `setup` function.
+You can now configure and enable the plugin by calling the `setup()` function.
 
 This is the default configuration:
 ```lua
