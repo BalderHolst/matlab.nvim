@@ -38,11 +38,16 @@ local function start_REPL()
             print(i, flag)
             table.insert(cmd, flag)
         end
+        local started = false
         M.repl_job_id = vim.fn.jobstart(cmd, {
             stout_buffered = true,
             on_stdout = function(_, data)
                 if data then
                     if #data == 1 and data[1] == ">> " then
+                        if not started then
+                            started = true
+                            vim.api.nvim_buf_set_lines(M.out_buf, 0, -1, false, {})
+                        end
                         return
                     end
 
