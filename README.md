@@ -38,39 +38,60 @@ require("matlab").setup({
 
 # Functions
 
+Evaluate a string as a matlab command.
+```vim
+MatlabEval <expr>
+```
+
 ```lua
--- Evaluate a string as a matlab command.
 require("matlab").evaluate("<matlab cmd>")
 ```
 
-```lua
--- Evaluate a table of strings as matlab commands.
-require("matlab").evaluate_lines(lines)
+Evaluate currently opened matlab script.
+```vim
+MatlabEvalFile
 ```
 
 ```lua
--- Evaluate a matlab script file.
-require("matlab").evaluate_file(path)
-```
-
-```lua
--- Evaluate currently opened matlab script.
 require("matlab").evaluate_current_file()
 ```
 
+Evaluate a matlab script file.
 ```lua
--- Evaluate the block under the cursor. Matlab blocks are separated by comments beginning with `%%`.
+require("matlab").evaluate_file(path)
+```
+
+
+Evaluate the block under the cursor. Matlab blocks are separated by comments beginning with `%%`.
+```vim
+MatlabEvalBlock
+```
+
+```lua
 require("matlab").evaluate_block()
 ```
 
-```lua
--- Evaluate currently highlighted text.
-require("matlab").visual_evaluate()
+Evaluate currently highlighted text.
+```vim
+MatlabEvalVisual
 ```
 
 ```lua
--- Close window and end matlab process.
+require("matlab").evaluate_visual()
+```
+
+Close window and end matlab process.
+```vim
+MatlabClose
+```
+
+```lua
 require("matlab").close()
+```
+
+Evaluate a table of strings as matlab commands.
+```lua
+require("matlab").evaluate_lines(lines)
 ```
 
 # TODO:

@@ -158,7 +158,7 @@ local function get_visual()
     return text
 end
 
-M.visual_evaluate = function()
+M.evaluate_visual = function()
     local text = get_visual()
     M.evaluate(text)
 end
@@ -177,5 +177,11 @@ end
 M.open_workspace = function()
     M.evaluate("workspace\n")
 end
+
+vim.cmd([[command! -nargs=1 MatlabEval lua require("matlab").evaluate(<f-args>)]])
+vim.cmd([[command! MatlabEvalBlock lua require("matlab").evaluate_block()]])
+vim.cmd([[command! MatlabEvalVisual lua require("matlab").evaluate_visual()]])
+vim.cmd([[command! MatlabEvalFile lua require("matlab").evaluate_current_file()]])
+vim.cmd([[command! MatlabClose lua require("matlab").close()]])
 
 return M
