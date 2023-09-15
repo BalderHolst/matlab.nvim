@@ -29,7 +29,7 @@ end
 M.repl_job_id = nil
 M.out_win, M.out_buf = nil, nil
 
-local function start_REPL()
+local function start_REPL(headerlines)
     if M.repl_job_id == nil then
         local dir = vim.fn.getcwd()
         local cmd = {
@@ -56,7 +56,7 @@ local function start_REPL()
                     if #data == 1 and data[1] == ">> " then
                         if not started then
                             started = true
-                            vim.api.nvim_buf_set_lines(M.out_buf, 0, -1, false, {})
+                            vim.api.nvim_buf_set_lines(M.out_buf, headerlines or 0, -1, false, {})
                         end
                         return
                     end
@@ -89,17 +89,26 @@ local function create_out_buffer()
 end
 
 M.evaluate = function(input)
-    create_out_buffer()
-    start_REPL()
+    create_out_buffer() -- create out buffer if it does not exist
+    start_REPL()        -- start repl if it is not running
     vim.fn.chansend(M.repl_job_id, input .. "\n")
 end
 
 M.evaluate_current_file = function()
     local path = vim.fn.expand('%')
+    print(path)
     M.evaluate_file(path)
 end
 
 M.evaluate_file = function(path)
+    -- create out buffer if it does not exist
+    create_out_buffer()
+
+    vim.api.nvim_buf_set_lines(M.out_buf, 0, -1, false, { path })
+
+    -- start repl if it is not running   
+    start_REPL(1)
+
     vim.cmd("w")
     local command = [[run("]] .. path .. [[")]]
     M.evaluate(command)
@@ -159,8 +168,14 @@ M.evaluate_block = function()
         title = vim.fn.expand("%")
     end
 
+    -- Create out buffer if it does not exist
     create_out_buffer()
+
+    -- Replace whole output buffer with the title
     vim.api.nvim_buf_set_lines(M.out_buf, 0, -1, false, { title })
+
+    -- Start repl if it is not
+    start_REPL(1)
 
     M.evaluate_lines(lines)
 end
