@@ -1,3 +1,5 @@
+local ts_utils = require 'nvim-treesitter.ts_utils'
+
 local M = {}
 
 -- Default configuration
@@ -13,6 +15,8 @@ local function define_vim_commands()
     vim.cmd([[command! MatlabEvalBlock lua require("matlab").evaluate_block()]])
     vim.cmd([[command! MatlabEvalVisual lua require("matlab").evaluate_visual()]])
     vim.cmd([[command! MatlabEvalFile lua require("matlab").evaluate_current_file()]])
+    vim.cmd([[command! MatlabWorkspace lua require("matlab").open_workspace()]])
+    vim.cmd([[command! -nargs=1 MatlabDoc lua require("matlab").open_documentation(<f-args>)]])
     vim.cmd([[command! MatlabClose lua require("matlab").close()]])
 end
 
@@ -206,6 +210,40 @@ end
 
 M.open_workspace = function()
     M.evaluate("workspace\n")
+end
+
+M.open_documentation = function(matlab_command)
+    M.evaluate([[doc("]] .. matlab_command .. [[")]])
+end
+
+M.open_documentation_at_cursor = function ()
+    local cursor_node = ts_utils.get_node_at_cursor()
+    if cursor_node == nil then
+        error("No treesitter parser for Matlab found.")
+    end
+
+    local node = cursor_node
+
+    -- If the node is a function call, we need to extract the name of the function.
+    if node:type() == "function_call" then
+        local children = ts_utils.get_named_children(cursor_node);
+        for _, e in ipairs(children) do
+            if e:type() == "identifier" then
+                node = e
+                break
+            end
+        end
+    end
+
+    if node:type() ~= "identifier" then
+        print("Could not determine what to look up.")
+        return
+    end
+
+    local matlab_command = vim.treesitter.get_node_text(node, 0)
+
+    M.open_documentation(matlab_command)
+
 end
 
 return M

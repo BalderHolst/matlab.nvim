@@ -61,7 +61,6 @@ Evaluate a matlab script file.
 require("matlab").evaluate_file(path)
 ```
 
-
 Evaluate the block under the cursor. Matlab blocks are separated by comments beginning with `%%`.
 ```vim
 MatlabEvalBlock
@@ -80,6 +79,21 @@ MatlabEvalVisual
 require("matlab").evaluate_visual()
 ```
 
+Evaluate a table of strings as matlab commands.
+```lua
+require("matlab").evaluate_lines(lines)
+```
+
+Open documentation of the function under cursor.
+```lua
+require("matlab").open_documentation_at_cursor()
+```
+
+Open documentation of an arbitrary function.
+```vim
+MatlabDoc <matlab-function>
+```
+
 Close window and end matlab process.
 ```vim
 MatlabClose
@@ -89,10 +103,15 @@ MatlabClose
 require("matlab").close()
 ```
 
-Evaluate a table of strings as matlab commands.
-```lua
-require("matlab").evaluate_lines(lines)
+Open the matlab "workspace" (variable explorer).
+```vim
+MatlabWorkspace
 ```
+
+```lua
+require("matlab").open_workspace()
+```
+
 
 # TODO:
 - [ ] Matlab output inserted as comments under command
