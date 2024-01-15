@@ -49,10 +49,11 @@ local function start_REPL(headerlines)
             return
         end
         for i, flag in pairs(M.config.matlab_flags) do
-            print(i, flag)
+            vim.notify(i, flag)
             table.insert(cmd, flag)
         end
         local started = false
+        vim.notify("Starting Matlab: " .. table.concat(cmd, " "))
         M.repl_job_id = vim.fn.jobstart(cmd, {
             stout_buffered = true,
             on_stdout = function(_, data)
@@ -77,7 +78,7 @@ local function start_REPL(headerlines)
                 end
             end,
             on_exit = function()
-                print("Matlab stopped.")
+                vim.notify("Matlab stopped.")
             end
         })
     end
@@ -100,7 +101,7 @@ end
 
 M.evaluate_current_file = function()
     local path = vim.fn.expand('%')
-    print(path)
+    vim.notify(path)
     M.evaluate_file(path)
 end
 
@@ -198,6 +199,7 @@ M.evaluate_visual = function()
 end
 
 M.close = function()
+    vim.notify("Stopping Matlab...")
     vim.api.nvim_buf_delete(M.out_buf, {}) -- deletes buffer (and its window)
     M.out_win, M.out_buf = nil, nil        -- unsets saved buffer and window id
     vim.fn.jobclose(M.repl_job_id)
@@ -236,7 +238,7 @@ M.open_documentation_at_cursor = function ()
     end
 
     if node:type() ~= "identifier" then
-        print("Could not determine what to look up.")
+        vim.notify("Could not determine what to look up.")
         return
     end
 
